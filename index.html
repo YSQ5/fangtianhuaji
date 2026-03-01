@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <!-- 关键配置：让页面在手机上全屏显示，并禁用缩放，体验更好 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>方天画戟 - 3D兵器谱</title>
+    <!-- 引入 model-viewer 组件，这是实现3D和AR的核心库，从Google的CDN加载 [citation:1] -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+    <style>
+        /* 页面样式：全屏、深色背景，营造专注看兵器的氛围 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #2b1b0e; /* 仿古书的深褐色 */
+            height: 100vh; /* 视口全高 */
+            display: flex;
+            flex-direction: column;
+            font-family: "KaiTi", "楷体", serif;
+        }
+        /* 标题区：仿古书的标题样式 */
+        .title {
+            color: #d4af37; /* 金色 */
+            text-align: center;
+            padding: 15px 0;
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 6px;
+            text-shadow: 2px 2px 4px #000;
+            background: linear-gradient(to bottom, #3a2a1a, #2b1b0e);
+            border-bottom: 1px solid #5a4a3a;
+        }
+        /* 3D查看器：占据标题下方的所有空间 */
+        model-viewer {
+            width: 100%;
+            flex: 1;
+            background-color: transparent; /* 透明背景，方便以后加底图 */
+            --poster-color: transparent;
+        }
+        /* 提示文字 */
+        .hint {
+            text-align: center;
+            color: #b0a090;
+            font-size: 14px;
+            padding: 10px;
+            border-top: 1px solid #5a4a3a;
+            background-color: #1e150e;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">⚔️ 方天画戟 ⚔️</div>
+
+    <!-- 这是最核心的标签，所有3D和AR的魔力都来自这里 -->
+    <model-viewer 
+        id="first-model-viewer"
+        <!-- src 指向你的模型文件，文件名必须和你第三步放进去的完全一致！ -->
+        src="./fangtianhuaji.glb"
+        alt="吕布的方天画戟3D模型"
+        <!-- camera-controls: 允许用户用手指拖拽旋转、缩放模型 -->
+        camera-controls
+        <!-- auto-rotate: 模型自动缓慢旋转，方便用户从各个角度欣赏 -->
+        auto-rotate
+        rotation-per-second="30deg"
+        <!-- shadow-intensity: 阴影强度，让模型更有立体感 -->
+        shadow-intensity="1"
+        <!-- environment-image: 环境贴图，让金属质感更真实，这里用中性色调 -->
+        environment-image="neutral"
+        exposure="1.2"
+        <!-- ar: 启动增强现实功能的按钮，这是最酷的部分！[citation:10] -->
+        ar
+        ar-modes="scene-viewer quick-look"
+        <!-- 设置一个初始视角：水平45度，仰角75度，距离2.5米，这是个展示长兵器的好角度 -->
+        camera-orbit="45deg 75deg 2.5m"
+        min-camera-orbit="auto auto 1.5m"
+        max-camera-orbit="auto auto 5m"
+        style="width:100%; height:100%;">
+        
+        <!-- 这里可以放一个自定义的AR按钮，我们暂时让model-viewer显示默认的，所以把它隐藏了 -->
+        <button slot="ar-button" style="display: none;">
+            👆 点击在现实中查看
+        </button>
+    </model-viewer>
+
+    <div class="hint">
+        👆 手指拖拽可旋转缩放 | 点击屏幕上的AR按钮，可以把方天画戟“摆”在家里 👆
+    </div>
+
+    <script>
+        // 一段小脚本，检测设备是否支持AR，并给出相应提示
+        (function() {
+            const modelViewer = document.querySelector("model-viewer");
+            if (modelViewer) {
+                // 检查是否能激活AR（需要HTTPS环境，本地文件无法测试）
+                if (!modelViewer.canActivateAR) {
+                    // 注意：在本地直接打开HTML文件时，这一步会显示不支持，部署到服务器后才会正常
+                    document.querySelector('.hint').innerHTML = 
+                        '⚠️ 您的设备暂不支持AR，但仍可3D旋转查看。请确保通过HTTPS访问以启用AR。 ⚠️';
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
