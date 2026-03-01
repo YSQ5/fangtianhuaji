@@ -2,31 +2,19 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>方天画戟 - 3D兵器谱</title>
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-    <style>
-        body { margin: 0; padding: 0; background-color: #2b1b0e; height: 100vh; display: flex; flex-direction: column; }
-        .title { color: #d4af37; text-align: center; padding: 15px 0; font-size: 28px; font-weight: bold; font-family: "KaiTi", serif; background: #1e150e; }
-        model-viewer { width: 100%; flex: 1; background-color: transparent; }
-        .hint { text-align: center; color: #b0a090; font-size: 14px; padding: 10px; background-color: #1e150e; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方天画戟</title>
+    <!-- 引入 model-viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
-<body>
-    <div class="title">⚔️ 方天画戟 ⚔️</div>
+<body style="margin:0; padding:0; background:#000; height:100vh;">
+    <!-- 最简配置，只保留旋转缩放功能 -->
     <model-viewer 
         src="./fantasy+halberd+3d+model.glb"
-        alt="方天画戟3D模型"
+        alt="方天画戟"
         camera-controls
         auto-rotate
-        shadow-intensity="1"
-        environment-image="neutral"
-        ar
-        ar-modes="scene-viewer quick-look"
-        style="width:100%; height:100%;">
+        style="width:100%; height:100%; background-color: #222;">
     </model-viewer>
-    <div class="hint">
-        👆 手指拖拽旋转 | 点击AR按钮可以摆在家里 👆
-    </div>
 </body>
 </html>
